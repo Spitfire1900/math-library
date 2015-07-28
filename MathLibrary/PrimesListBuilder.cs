@@ -196,7 +196,7 @@ namespace MathLibrary
 
             Queue<long> nextPrime = new Queue<long>();
 
-            for (int i = 0; i < Threads - 1; i++)
+            for (int i = 0; i < Threads; i++)
                 {
                 nextPrime.Enqueue(StartingValue + i);
             }
@@ -205,7 +205,7 @@ namespace MathLibrary
             {
 
                 List<long> batch = new List<long>();
-                for (int i = 0; i < Threads - 1; i++)
+                for (int i = 0; i < Threads; i++)
                 {
                     batch.Add(nextPrime.Dequeue());
                 }
@@ -234,7 +234,7 @@ namespace MathLibrary
                 if (t4.Result == true)
                     listOfPrimes.Add(batch[3]);
 
-                for (int i = 0; i < Threads - 1; i++)
+                for (int i = 0; i < Threads; i++)
                 {
                     nextPrime.Enqueue(batch[3] + i + 1);
                 }
