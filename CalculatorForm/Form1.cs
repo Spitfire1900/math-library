@@ -50,31 +50,7 @@ namespace Calculator
             if (chkBxLiveUpdate.Checked != true)
             {
                 //TODO: Turn this into a queued process. Should probably actually be done in the MathLibrary.
-                PrimesListBuilder pU1 = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value / 4 );
-                PrimesListBuilder pU2 = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDMaxValue.Value / 4 * + 1, (long)numUDMaxValue.Value / 4 * 2);
-                PrimesListBuilder pU3 = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDMaxValue.Value / 4 * 2 + 1, (long)numUDMaxValue.Value / 4 * 3);
-                PrimesListBuilder pU4 = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDMaxValue.Value / 4 * 3 + 1, (long)numUDMaxValue.Value / 4 * 4);
-
-                Task<List<long>> t1 = new Task<List<long>>(pU1.FindPrimes);
-                Task<List<long>> t2 = new Task<List<long>>(pU2.FindPrimes);
-                Task<List<long>> t3 = new Task<List<long>>(pU3.FindPrimes);
-                Task<List<long>> t4 = new Task<List<long>>(pU4.FindPrimes);
-
-                t1.Start();
-                t2.Start();
-                t3.Start();
-                t4.Start();
-
-                t1.Wait();
-                t2.Wait();
-                t3.Wait();
-                t4.Wait();
-
-
-                List<long> lPrimes = t1.Result;
-                lPrimes.AddRange(t2.Result);
-                lPrimes.AddRange(t3.Result);
-                lPrimes.AddRange(t4.Result);
+                List<long> lPrimes = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).PrimesList;
 
                 StringBuilder sBU = new StringBuilder(); foreach (long u in lPrimes)
                     if (sBU.Length == 0)
