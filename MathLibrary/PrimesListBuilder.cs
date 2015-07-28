@@ -210,10 +210,10 @@ namespace MathLibrary
                     batch.Add(nextPrime.Dequeue());
                 }
 
-                Task<bool> t1 = new Task<bool>(IsPrime(batch[0]));
-                Task<bool> t2 = new Task<bool>(IsPrime(batch[1]));
-                Task<bool> t3 = new Task<bool>(IsPrime(batch[2]));
-                Task<bool> t4 = new Task<bool>(IsPrime(batch[3]));
+                Task<bool> t1 = new Task<bool>(() => (IsPrime(batch[0])));
+                Task<bool> t2 = new Task<bool>(() => (IsPrime(batch[1])));
+                Task<bool> t3 = new Task<bool>(() => (IsPrime(batch[2])));
+                Task<bool> t4 = new Task<bool>(() => (IsPrime(batch[3])));
 
                 t1.Start();
                 t2.Start();
@@ -243,10 +243,10 @@ namespace MathLibrary
             return listOfPrimes;
         }
 
-        private bool IsPrime(long number)
+        private Boolean IsPrime(long number)
         {
             long i = 2;
-            bool isPrime = true;
+            Boolean isPrime = true;
 
             while (i <= System.Math.Sqrt(number))
             {
