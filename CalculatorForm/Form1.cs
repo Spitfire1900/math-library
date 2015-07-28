@@ -50,7 +50,7 @@ namespace Calculator
             if (chkBxLiveUpdate.Checked != true)
             {
                 //TODO: Turn this into a queued process. Should probably actually be done in the MathLibrary.
-                List<long> lPrimes = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).PrimesList;
+                List<long> lPrimes = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).FindPrimes();
 
                 StringBuilder sBU = new StringBuilder(); foreach (long u in lPrimes)
                     if (sBU.Length == 0)
