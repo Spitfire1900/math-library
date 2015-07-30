@@ -210,29 +210,23 @@ namespace MathLibrary
                     batch.Add(nextPrime.Dequeue());
                 }
 
-                Task<bool> t1 = new Task<bool>(() => (IsPrime(batch[0])));
-                Task<bool> t2 = new Task<bool>(() => (IsPrime(batch[1])));
-                Task<bool> t3 = new Task<bool>(() => (IsPrime(batch[2])));
-                Task<bool> t4 = new Task<bool>(() => (IsPrime(batch[3])));
+                List<Task<primeResult>> lT = new List<Task<primeResult>>();
+                foreach (long l in batch)
+                {
+                    Task<primeResult> t = new Task<primeResult>(() => (IsPrime(l)));
+                    lT.Add(t);
+                    t.Start();
+                }
+                foreach (Task<primeResult> t in lT)
+                {
+                    t.Wait();
+                    primeResult pR = t.Result;
 
-                t1.Start();
-                t2.Start();
-                t3.Start();
-                t4.Start();
-
-                t1.Wait();
-                t2.Wait();
-                t3.Wait();
-                t4.Wait();
-
-                if (t1.Result == true)
-                    listOfPrimes.Add(batch[0]);
-                if (t2.Result == true)
-                    listOfPrimes.Add(batch[1]);
-                if (t3.Result == true)
-                    listOfPrimes.Add(batch[2]);
-                if (t4.Result == true)
-                    listOfPrimes.Add(batch[3]);
+                    if (pR.result == true)
+                    {
+                        listOfPrimes.Add(pR.number);
+                    }
+                }
 
                 for (int i = 0; i < Threads; i++)
                 {
@@ -243,7 +237,7 @@ namespace MathLibrary
             return listOfPrimes;
         }
 
-        private Boolean IsPrime(long number)
+        private primeResult IsPrime(long number)
         {
             long i = 2;
             Boolean isPrime = true;
@@ -256,7 +250,23 @@ namespace MathLibrary
                 i++;
             }
 
-            return isPrime;
+            return new primeResult(isPrime, number);
+        }
+
+        #endregion
+
+        #region NestedClasses
+
+        class primeResult
+        {
+            internal bool result;
+            internal long number;
+
+            internal primeResult(bool result, long number)
+            {
+                this.result = result;
+                this.number = number;
+            }
         }
 
         #endregion
