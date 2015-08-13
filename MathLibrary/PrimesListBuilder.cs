@@ -27,7 +27,7 @@ namespace MathLibrary
         private long _startingValue = 0;
         private long _maxValue = Int64.MaxValue;
         private long _maxTime = 120;
-        private uint _threads = 4;
+        private int _threads = Environment.ProcessorCount;
 
         #endregion
 
@@ -93,11 +93,11 @@ namespace MathLibrary
         }
         public uint Threads
         {
-            get { return _threads; }
+            get { return Convert.ToUInt32(_threads); }
             set
             {
                 if (value != 0)
-                    _threads = value;
+                    _threads = Convert.ToInt32(value);
             }
         }
 
@@ -230,7 +230,7 @@ namespace MathLibrary
 
                 for (int i = 0; i < Threads; i++)
                 {
-                    nextPrime.Enqueue(batch[3] + i + 1);
+                    nextPrime.Enqueue(batch[_threads -1] + i + 1);
                 }
             }
 
