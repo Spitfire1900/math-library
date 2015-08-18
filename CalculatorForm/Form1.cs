@@ -49,8 +49,11 @@ namespace Calculator
 
             if (chkBxLiveUpdate.Checked != true)
             {
-                //TODO: Turn this into a queued process. Should probably actually be done in the MathLibrary.
-                List<long> lPrimes = new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).FindPrimes();
+                Task<List<long>> lBuilder = new Task<List<long>>(() =>
+                    new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).FindPrimes());
+                lBuilder.Start();
+                
+                List<long> lPrimes = lBuilder.Result;
 
                 StringBuilder sBU = new StringBuilder(); foreach (long u in lPrimes)
                     if (sBU.Length == 0)
@@ -69,8 +72,11 @@ namespace Calculator
                     if (stopwatch.ElapsedMilliseconds >= (long)numUDMaxTime.Value * 60 * 1000)
                         break;
 
-                    PrimesListBuilder pC = new PrimesListBuilder(1, (long)numUDMaxTime.Value * 60, l, (long)numUDMaxValue.Value);
-                    w = pC.FindPrimes()[0];
+                    Task<List<long>> lBuilder = new Task<List<long>>(() =>
+                    new PrimesListBuilder(1, (long)numUDMaxTime.Value * 60, l, (long)numUDMaxValue.Value).FindPrimes());
+                    lBuilder.Start();
+
+                    w = lBuilder.Result[0];
 
                     if (txtBxPrimes.Text == "")
                         txtBxPrimes.Text = w.ToString();
