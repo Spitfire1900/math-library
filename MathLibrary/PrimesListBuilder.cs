@@ -254,6 +254,12 @@ namespace MathLibrary
         }
 
         #endregion
+        
+        #region CustomEvents
+        
+        public event EventHandler<List<long>> finishedFindingPrimes;
+        
+        #endregion
 
         #region NestedClasses
 
