@@ -39,7 +39,6 @@
             this.btnPrimesStart = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.txtBxPrimes = new System.Windows.Forms.TextBox();
-            this.chkBxLiveUpdate = new System.Windows.Forms.CheckBox();
             this.numUDMaxValue = new System.Windows.Forms.NumericUpDown();
             this.lblMaxValue = new System.Windows.Forms.Label();
             this.numUDStartingValue = new System.Windows.Forms.NumericUpDown();
@@ -49,9 +48,9 @@
             this.numUDNumOfPrimes = new System.Windows.Forms.NumericUpDown();
             this.lblNumOfPrimes = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnWrite = new System.Windows.Forms.Button();
-            this.btnRead = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnRead = new System.Windows.Forms.Button();
+            this.btnWrite = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageFactor.SuspendLayout();
             this.tabPagePrimes.SuspendLayout();
@@ -137,7 +136,6 @@
             this.tabPagePrimes.Controls.Add(this.btnPrimesStart);
             this.tabPagePrimes.Controls.Add(this.btnExport);
             this.tabPagePrimes.Controls.Add(this.txtBxPrimes);
-            this.tabPagePrimes.Controls.Add(this.chkBxLiveUpdate);
             this.tabPagePrimes.Controls.Add(this.numUDMaxValue);
             this.tabPagePrimes.Controls.Add(this.lblMaxValue);
             this.tabPagePrimes.Controls.Add(this.numUDStartingValue);
@@ -176,21 +174,11 @@
             // 
             // txtBxPrimes
             // 
-            this.txtBxPrimes.Location = new System.Drawing.Point(7, 192);
+            this.txtBxPrimes.Location = new System.Drawing.Point(7, 168);
             this.txtBxPrimes.Multiline = true;
             this.txtBxPrimes.Name = "txtBxPrimes";
-            this.txtBxPrimes.Size = new System.Drawing.Size(288, 64);
+            this.txtBxPrimes.Size = new System.Drawing.Size(288, 88);
             this.txtBxPrimes.TabIndex = 10;
-            // 
-            // chkBxLiveUpdate
-            // 
-            this.chkBxLiveUpdate.AutoSize = true;
-            this.chkBxLiveUpdate.Location = new System.Drawing.Point(7, 168);
-            this.chkBxLiveUpdate.Name = "chkBxLiveUpdate";
-            this.chkBxLiveUpdate.Size = new System.Drawing.Size(90, 17);
-            this.chkBxLiveUpdate.TabIndex = 5;
-            this.chkBxLiveUpdate.Text = "Live Update?";
-            this.chkBxLiveUpdate.UseVisualStyleBackColor = true;
             // 
             // numUDMaxValue
             // 
@@ -299,15 +287,13 @@
             this.tabPage1.Text = "CSVDataAdapter";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnWrite
+            // dataGridView1
             // 
-            this.btnWrite.Location = new System.Drawing.Point(88, 6);
-            this.btnWrite.Name = "btnWrite";
-            this.btnWrite.Size = new System.Drawing.Size(75, 23);
-            this.btnWrite.TabIndex = 0;
-            this.btnWrite.Text = "Write!";
-            this.btnWrite.UseVisualStyleBackColor = true;
-            this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 35);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 2;
             // 
             // btnRead
             // 
@@ -319,13 +305,15 @@
             this.btnRead.UseVisualStyleBackColor = true;
             this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
-            // dataGridView1
+            // btnWrite
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 35);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 2;
+            this.btnWrite.Location = new System.Drawing.Point(88, 6);
+            this.btnWrite.Name = "btnWrite";
+            this.btnWrite.Size = new System.Drawing.Size(75, 23);
+            this.btnWrite.TabIndex = 0;
+            this.btnWrite.Text = "Write!";
+            this.btnWrite.UseVisualStyleBackColor = true;
+            this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
             // 
             // Form1
             // 
@@ -372,7 +360,6 @@
         private System.Windows.Forms.Button btnPrimesStart;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.TextBox txtBxPrimes;
-        private System.Windows.Forms.CheckBox chkBxLiveUpdate;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnWrite;
         private System.Windows.Forms.Button btnRead;

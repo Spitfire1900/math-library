@@ -17,7 +17,9 @@ namespace Calculator
         public Form1()
         {
             InitializeComponent();
+            MathLibrary.PrimesListBuilder.finishedFindingPrimes += PrimesListBuilder_finishedFindingPrimes;
         }
+
 
         private void btnFactor_Click(object sender, EventArgs e)
         {
@@ -46,51 +48,50 @@ namespace Calculator
         private void btnPrimesStart_Click(object sender, EventArgs e)
         {
             txtBxPrimes.Clear();
-
-            if (chkBxLiveUpdate.Checked != true)
-            {
                 Task<List<long>> lBuilder = new Task<List<long>>(() =>
                     new PrimesListBuilder((int)numUDNumOfPrimes.Value, (long)numUDMaxTime.Value * 60, (long)numUDStartingValue.Value, (long)numUDMaxValue.Value).FindPrimes());
                 lBuilder.Start();
-                
-                List<long> lPrimes = lBuilder.Result;
 
-                StringBuilder sBU = new StringBuilder(); foreach (long u in lPrimes)
+                txtBxPrimes.Text = "This textbox will be populated shortly, computing primes.";
+        }
+
+        private void PrimesListBuilder_finishedFindingPrimes(object sender, PrimesListBuilder.finishedFindingPrimesEventArgs e)
+        {
+
+            if (e.listOfPrimes.Count != 0)
+            {
+                StringBuilder sBU = new StringBuilder();
+
+                foreach (long u in e.listOfPrimes)
                     if (sBU.Length == 0)
                         sBU.Append(u);
                     else
                         sBU.Append(", " + u);
-
-                txtBxPrimes.Text = sBU.ToString();
+                SetText(sBU.ToString());
+            }
+            else
+                SetText("No primes were found");
+            
+        }
+        private void SetText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.txtBxPrimes.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
             }
             else
             {
-                long w;
-                var stopwatch = new System.Diagnostics.Stopwatch(); stopwatch.Start();
-                long l = (long)numUDStartingValue.Value; for (int i = 1; i <= (int)numUDNumOfPrimes.Value; i++)
-                {
-                    if (stopwatch.ElapsedMilliseconds >= (long)numUDMaxTime.Value * 60 * 1000)
-                        break;
-
-                    Task<List<long>> lBuilder = new Task<List<long>>(() =>
-                    new PrimesListBuilder(1, (long)numUDMaxTime.Value * 60, l, (long)numUDMaxValue.Value).FindPrimes());
-                    lBuilder.Start();
-
-                    w = lBuilder.Result[0];
-
-                    if (txtBxPrimes.Text == "")
-                        txtBxPrimes.Text = w.ToString();
-                    else
-                        txtBxPrimes.Text = txtBxPrimes.Text + ", " + w.ToString();
-
-                    
-                    l = w + 1;
-                }
+                this.txtBxPrimes.Text = text;
             }
-            if (txtBxPrimes.Text == "")
-                txtBxPrimes.Text = "No primes were found";
         }
 
+        // This delegate enables asynchronous calls for setting
+        // the text property on a TextBox control.
+        delegate void SetTextCallback(string text);
         private void btnWrite_Click(object sender, EventArgs e)
         {
             CSVListAdapter csv = new CSVListAdapter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Gottfried Studios\MiscDataLibrary\list.csv");
@@ -130,5 +131,7 @@ namespace Calculator
             foreach (string s in array2d)
                 dataGridView1.Rows.Add(s);
         }
+
+
     }
 }

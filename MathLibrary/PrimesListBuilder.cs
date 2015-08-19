@@ -197,7 +197,7 @@ namespace MathLibrary
             Queue<long> nextPrime = new Queue<long>();
 
             for (int i = 0; i < Threads; i++)
-                {
+            {
                 nextPrime.Enqueue(StartingValue + i);
             }
 
@@ -230,10 +230,10 @@ namespace MathLibrary
 
                 for (int i = 0; i < Threads; i++)
                 {
-                    nextPrime.Enqueue(batch[_threads -1] + i + 1);
+                    nextPrime.Enqueue(batch[_threads - 1] + i + 1);
                 }
             }
-
+            finishedFindingPrimes(this, new finishedFindingPrimesEventArgs(listOfPrimes));
             return listOfPrimes;
         }
 
@@ -254,11 +254,12 @@ namespace MathLibrary
         }
 
         #endregion
-        
+
         #region CustomEvents
-        
-        public event EventHandler<List<long>> finishedFindingPrimes;
-        
+
+        public static event EventHandler<finishedFindingPrimesEventArgs> finishedFindingPrimes;
+
+
         #endregion
 
         #region NestedClasses
@@ -274,7 +275,15 @@ namespace MathLibrary
                 this.number = number;
             }
         }
+        public class finishedFindingPrimesEventArgs : EventArgs
+        {
+            public List<long> listOfPrimes;
 
+            public finishedFindingPrimesEventArgs(List<long> lPrimes)
+            {
+                listOfPrimes = lPrimes;
+            }
+        }
         #endregion
     }
 }
