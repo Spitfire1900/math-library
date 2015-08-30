@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Copyright © 2015 Kyle Gottfried. All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
